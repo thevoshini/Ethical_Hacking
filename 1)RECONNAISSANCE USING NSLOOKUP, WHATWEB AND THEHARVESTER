@@ -1,0 +1,167 @@
+┌──(crypl㉿kali)-[~]­
+└─$ nslookup vulnweb.com
+Server:         10.0.2.3
+Address:        10.0.2.3#53
+Non-authoritative answer:
+Name:   vulnweb.com
+Address: 44.228.249.3
+Name:   vulnweb.com
+Address: 64:ff9b::2ce4:f903
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup -type=ns vulnweb.com
+Server:         10.0.2.3
+Address:        10.0.2.3#53
+Non-authoritative answer:
+vulnweb.com     nameserver = ns2.eurodns.com.
+vulnweb.com     nameserver = ns3.eurodns.com.
+vulnweb.com     nameserver = ns4.eurodns.com.
+vulnweb.com     nameserver = ns1.eurodns.com.
+Authoritative answers can be found from:
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup -type=mx vulnweb.com
+Server:         10.0.2.3
+Address:        10.0.2.3#53
+Non-authoritative answer:
+*** Can't find vulnweb.com: No answer
+Authoritative answers can be found from:
+vulnweb.com
+        origin = ns1.eurodns.com
+        mail addr = hostmaster.eurodns.com
+        serial = 2024111200
+        refresh = 86400
+        retry = 7200
+        expire = 604800
+        minimum = 86400
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup -type=text vulnweb.com
+unknown query type: text
+Server:         10.0.2.3
+Address:        10.0.2.3#53
+Non-authoritative answer:
+Name:   vulnweb.com
+Address: 44.228.249.3
+Name:   vulnweb.com
+Address: 64:ff9b::2ce4:f903
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup -type=soa vulnweb.com
+Server:         10.0.2.3                                                                                                                                                                                                                    
+Address:        10.0.2.3#53
+Non-authoritative answer:
+vulnweb.com
+        origin = ns1.eurodns.com
+        mail addr = hostmaster.eurodns.com
+        serial = 2024111200
+        refresh = 86400
+        retry = 7200
+        expire = 604800
+        minimum = 86400
+Authoritative answers can be found from:
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup -type=any vulnweb.com 8.8.8.8                                                                                                                                                                                           
+Server:         8.8.8.8
+Address:        8.8.8.8#53
+Non-authoritative answer:
+vulnweb.com     hinfo = "RFC8482" ""
+Authoritative answers can be found from:
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup vulnweb.com 8.8.8.8                                                                                                                                                                                                  
+Server:         8.8.8.8
+Address:        8.8.8.8#53
+Non-authoritative answer:
+Name:   vulnweb.com
+Address: 44.228.249.3
+
+┌──(crypl㉿kali)-[~]
+└─$ nslookup -debug vulnweb.com 8.8.8.8                                                                                                                                                                                                     
+Server:         8.8.8.8
+Address:        8.8.8.8#53
+------------
+    QUESTIONS:
+        vulnweb.com, type = A, class = IN
+    ANSWERS:
+    ->  vulnweb.com
+        internet address = 44.228.249.3
+        ttl = 3600
+    AUTHORITY RECORDS:
+    ADDITIONAL RECORDS:
+------------
+Non-authoritative answer:
+Name:   vulnweb.com
+Address: 44.228.249.3
+------------
+    QUESTIONS:
+        vulnweb.com, type = AAAA, class = IN
+    ANSWERS:
+    AUTHORITY RECORDS:
+    ->  vulnweb.com
+        origin = ns1.eurodns.com
+        mail addr = hostmaster.eurodns.com
+        serial = 2024111200
+        refresh = 86400
+        retry = 7200
+        expire = 604800
+        minimum = 86400
+        ttl = 1800
+    ADDITIONAL RECORDS:
+------------
+
+┌──(crypl㉿kali)-[~]
+└─$ whatweb vulnweb.com                                                                                                                                                                                                                     
+http://vulnweb.com [200 OK] Country[UNITED STATES][US], HTTPServer[nginx/1.19.0], IP[44.228.249.3], Title[Acunetix Web Vulnerability Scanner - Test websites], nginx[1.19.0]
+
+┌──(crypl㉿kali)-[~]
+└─$ whatweb -v vulnweb.com                                                                                                                                                                                                                  
+WhatWeb report for http://vulnweb.com
+Status    : 200 OK
+Title     : Acunetix Web Vulnerability Scanner - Test websites
+IP        : 44.228.249.3
+Country   : UNITED STATES, US
+Summary   : HTTPServer[nginx/1.19.0], nginx[1.19.0]
+Detected Plugins:
+[ HTTPServer ]
+        HTTP server header string. This plugin also attempts to 
+        identify the operating system from the server header. 
+        String       : nginx/1.19.0 (from server string)
+[ nginx ]
+        Nginx (Engine-X) is a free, open-source, high-performance 
+        HTTP server and reverse proxy, as well as an IMAP/POP3 
+        proxy server. 
+        Version      : 1.19.0
+        Website     : http://nginx.net/
+HTTP Headers:
+        HTTP/1.1 200 OK
+        Server: nginx/1.19.0
+        Date: Wed, 06 Aug 2025 01:26:19 GMT
+        Content-Type: text/html
+        Last-Modified: Tue, 28 Jul 2020 09:20:49 GMT
+        Transfer-Encoding: chunked
+        Connection: close
+        ETag: W/"5f1fedf1-fb2"
+        Content-Encoding: gzip
+
+┌──(crypl㉿kali)-[~]
+└─$ whatweb -a 1 vulnweb.com                                                                                                                                                                                                               
+http://vulnweb.com [200 OK] Country[UNITED STATES][US], HTTPServer[nginx/1.19.0], IP[44.228.249.3], Title[Acunetix Web Vulnerability Scanner - Test websites], nginx[1.19.0]
+
+┌──(crypl㉿kali)-[~]
+└─$ theHarvester -d vulnweb -l 10 -b google
+The following engines are not supported: {'google'}
+[!] Invalid source.
+
+┌──(crypl㉿kali)-[~]
+└─$ theHarvester -d vulnweb -l 10 -b bing
+[*] Target: vulnweb 
+Read api-keys.yaml from /etc/theHarvester/api-keys.yaml
+        Searching 0 results.
+[*] Searching Bing.                                                                                                                                                                                                                           [*] No IPs found.                                                                                                                                                                                             
+[*] No emails found.                                                                                                                                                                                                                        
+[*] No people found.                                                                                                                                                                                                                        
+[*] Hosts found: 1                                                                                                                                                                                                                          
+---------------------                                                                                                                                                                                                                       
+testasp.vulnweb  
