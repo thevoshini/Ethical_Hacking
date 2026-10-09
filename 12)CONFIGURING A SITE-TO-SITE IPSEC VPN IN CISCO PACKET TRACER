@@ -1,0 +1,79 @@
+COMMANDS:
+
+ROUTER1:
+enable
+configure terminal
+hostname R1
+interface g0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+exit
+interface s0/0/0
+ ip address 10.10.10.1 255.255.255.252
+ clock rate 64000
+ no shutdown
+exit
+ip route 192.168.2.0 255.255.255.0 10.10.10.2
+exit
+
+ROUTER2:
+enable
+configure terminal
+hostname R2
+interface g0/0
+ ip address 192.168.2.1 255.255.255.0
+ no shutdown
+exit
+interface s0/0/0
+ ip address 10.10.10.2 255.255.255.252
+ no shutdown
+exit
+ip route 192.168.1.0 255.255.255.0 10.10.10.1
+exit
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+mode tunnel
+exit
+
+ROUTER1:
+crypto isakmp policy 10
+ encryption aes
+ hash sha
+ authentication pre-share
+ group 2
+ lifetime 86400
+exit
+crypto isakmp key cisco123 address 10.10.10.2
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+access-list 100 permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
+crypto map VPN-MAP 10 ipsec-isakmp
+ set peer 10.10.10.2
+ set transform-set VPN-SET
+ match address 100
+exit
+interface fa0/0
+ crypto map VPN-MAP
+exit
+exit
+wr
+
+ROUTER2:
+crypto isakmp policy 10
+ encryption aes
+ hash sha
+ authentication pre-share
+ group 2
+ lifetime 86400
+exit
+crypto isakmp key cisco123 address 10.10.10.1
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+access-list 100 permit ip 192.168.2.0 0.0.0.255 192.168.1.0 0.0.0.255
+crypto map VPN-MAP 10 ipsec-isakmp
+ set peer 10.10.10.1
+ set transform-set VPN-SET
+ match address 100
+exit
+interface fa0/0
+ crypto map VPN-MAP
+exit
+exit
+wr
