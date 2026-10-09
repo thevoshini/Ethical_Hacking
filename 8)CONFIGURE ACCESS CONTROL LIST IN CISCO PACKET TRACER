@@ -1,0 +1,32 @@
+PROCEDURE:
+    1. Open cisco packet tracer application
+    2. Pick and place all required devices
+    3. Assign IP address and connect devices
+    4. Type the commands in CLI
+    5. Ping and watch the output
+COMMANDS:
+Router>CLI
+    • enable
+    • configure terminal
+    • hostname Router1
+    • interface g0/0
+    • ip address 192.168.1.1 255.255.255.0
+    • no shutdown
+    • interface g0/1
+    • ip address 192.168.2.1 255.255.255.0
+    • no shutdown
+    • interface g0/2
+    • ip address 192.168.3.1 255.255.255.0
+    • no shutdown
+// ACL: block PC1 (192.168.1.10) from reaching PC2
+    • access-list 1 deny 192.168.1.10 0.0.0.0
+    • access-list 1 permit any
+//Apply ACL out on g0/1 (towards PC2)
+    • interface g0/1
+    • ip access-group 1 out
+    • end
+    • write memory
+
+
+OUTPUT:
+
