@@ -1,0 +1,16 @@
+CONFIGURE DNS IN CISCO PACKET TRACER
+
+PROCEDURE:
+    1. Open cisco packet tracer application
+    2. Pick and place all required devices
+    3. Assign IP address and connect devices
+    4. Configure DNS Server
+    • IP: 192.168.1.10
+    • Services → DNS → ON
+    • Add:
+    • Name: www.example.com
+    • Address: 192.168.1.20
+    5. Configure Web Server
+    • IP: 192.168.1.20
+    • Services → HTTP → ON
+    6. Test
