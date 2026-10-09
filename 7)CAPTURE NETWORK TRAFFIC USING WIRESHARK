@@ -1,0 +1,22 @@
+OUTPUT:
+┌──(crypl㉿kali)-[~]
+└─$ ping www.google.com
+PING www.google.com (142.250.205.36) 56(84) bytes of data.
+64 bytes from pnmaaa-am-in-f4.1e100.net (142.250.205.36): icmp_seq=1 ttl=255 time=36.1 ms
+64 bytes from pnmaaa-am-in-f4.1e100.net (142.250.205.36): icmp_seq=2 ttl=255 time=37.3 ms
+^C
+--- www.google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1047ms
+rtt min/avg/max/mdev = 36.081/36.706/37.332/0.625 ms
+
+┌──(crypl㉿kali)-[~]
+└─$ ping www.bing.com
+PING e86303.dscx.akamaiedge.net (23.212.254.42) 56(84) bytes of data.
+64 bytes from a23-212-254-42.deploy.static.akamaitechnologies.com (23.212.254.42): icmp_seq=1 ttl=255 time=44.8 ms
+64 bytes from a23-212-254-42.deploy.static.akamaitechnologies.com (23.212.254.42): icmp_seq=2 ttl=255 time=60.3 ms
+64 bytes from a23-212-254-42.deploy.static.akamaitechnologies.com (23.212.254.42): icmp_seq=3 ttl=255 time=49.6 ms
+^C
+--- e86303.dscx.akamaiedge.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2074ms
+rtt min/avg/max/mdev = 44.808/51.563/60.295/6.475 ms
+
